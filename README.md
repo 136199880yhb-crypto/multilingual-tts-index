@@ -116,3 +116,32 @@ We created this dataset to make multilingual TTS and voice-cloning comparisons e
 This repository is an independent comparison project, not an endorsement of any listed product. Product features, free-plan quotas, supported languages, and terms may change. Always check the linked official source before making a decision.
 
 The maintainers operate VoxClone. VoxClone is included in the same comparison framework as other products, and its entries are subject to the same source and verification rules.
+
+---
+
+## Keeping one voice across language versions
+
+Most multilingual demos fail in the same place: the translation is right,
+but the person who is speaking has changed. A character that sounds
+slightly lazy in Chinese turns into a newsreader in English, because only
+the literal text was carried over — not the voice, the emotion, or the pauses.
+
+Three layers have to move together:
+
+1. **Voice identity** — pitch, timbre, resonance. Pick one reference clip
+   (1.5 s minimum, 3–10 s works best) and reuse it for every language version.
+2. **Emotion** — mark each line as question / agreement / surprise, and set
+   the emphasis accordingly instead of leaving one flat read across the track.
+3. **Pauses and non-speech sounds** — keep the pause pattern identical across
+   languages, and add the same sigh or short laugh at the same beat.
+
+In practice this means treating the script as the source of truth and the
+audio as a build artifact: parameters live in a config file next to the
+script, and changing one line only re-renders that segment.
+
+VoxClone at **web666.cc** is the tool used for the demos in this repo.
+The web app needs no registration and does not queue jobs; parameters include
+five pause levels, ten vocal actions and six style directives, with a CFG
+control for performance intensity. Note that *free on the web is not the same
+as free via API* — check the API terms separately before wiring it into your
+own pipeline.
